@@ -34,12 +34,14 @@ public class JDBC {
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, "Bruce Willis");
 			statement.setFetchSize(5);
-			ResultSet result = statement.executeQuery();
-			connection.close();
-			while (result.next()) {
-				System.out.println(result.getString(1));
+			int iters = 100;
+			long startTime = System.currentTimeMillis();
+			for (int i = 0; i < iters; i++) {
+				ResultSet result = statement.executeQuery();
 			}
-			result.close();
+			System.out.println((System.currentTimeMillis() - startTime) / (1.0
+					* iters));
+			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
