@@ -28,7 +28,7 @@ public class JDBC {
 			int columns = data.getColumnCount();
 			while (result.next()) {
 				for (int i = 1; i <= columns; i++) {
-				System.out.print(data.getColumnName(i) + ": " + result.getObject(i) + " ");
+				System.out.print(data.getColumnName(i) + " = " + result.getObject(i) + "; ");
 				}
 				System.out.println();
 			}
