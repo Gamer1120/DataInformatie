@@ -1,10 +1,10 @@
 package week2;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 public class JDBC {
@@ -18,12 +18,13 @@ public class JDBC {
 		String pass = "kip";
 		String dbName = "db02";
 		String url = "jdbc:postgresql://" + host + ":5432/" + dbName;
-		String sql = "SELECT name, year FROM movie WHERE rating >= 8.7 AND rating <= 9.0";
+		String sql = "SELECT DISTINCT person.name FROM person, writes WHERE person.pid = writes.pid AND writes.mid IN (SELECT acts.mid FROM acts, person WHERE person.pid = acts.pid AND person.name = ?)";
 		try {
 			Connection connection = DriverManager.getConnection(url, dbName,
 					pass);
-			Statement statement = connection.createStatement();
-			ResultSet result = statement.executeQuery(sql);
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, "Bruce Willis");
+			ResultSet result = statement.executeQuery();
 			ResultSetMetaData data = result.getMetaData();
 			int columns = data.getColumnCount();
 			while (result.next()) {
