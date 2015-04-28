@@ -18,7 +18,7 @@ public class JDBC {
 		String pass = "kip";
 		String dbName = "db02";
 		String url = "jdbc:postgresql://" + host + ":5432/" + dbName;
-		String sql = "SELECT DISTINCT person.name FROM person, writes WHERE person.pid = writes.pid AND writes.mid IN (SELECT acts.mid FROM acts, person WHERE person.pid = acts.pid AND person.name = ?)";
+		String sql = "SELECT MoviesOfActor(?);";
 		try {
 			Connection connection = DriverManager.getConnection(url, dbName,
 					pass);
