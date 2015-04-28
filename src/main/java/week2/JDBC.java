@@ -30,7 +30,7 @@ public class JDBC {
 			Connection connection = DriverManager.getConnection(url, dbName,
 					pass);
 
-			String query = "SELECT DISTINCT person.name FROM person, writes WHERE person.pid = writes.pid AND writes.mid IN ( SELECT acts.mid FROM acts, person WHERE person.pid = acts.pid AND person.name = ?)";
+			String query = "SELECT moviesofactor(?)";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, "Bruce Willis");
 			statement.setFetchSize(5);
