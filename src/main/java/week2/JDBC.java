@@ -1,5 +1,6 @@
 package week2;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Connection;
@@ -28,11 +29,17 @@ public class JDBC {
 		try {
 			Connection connection = DriverManager.getConnection(url, dbName,
 					pass);
-			Statement statement = connection.createStatement();
-			ResultSet result = statement.executeQuery("SELECT name, year FROM movie WHERE rating >= 8.7 AND rating <= 9.0");
+
+			String query = "SELECT DISTINCT person.name FROM person, writes WHERE person.pid = writes.pid AND writes.mid IN ( SELECT acts.mid FROM acts, person WHERE person.pid = acts.pid AND person.name = ?)";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, "Bruce Willis");
+			ResultSet result = statement.executeQuery();
+			connection.close();
+			while (result.next()) {
+				System.out.println(result.getString(1));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 }
