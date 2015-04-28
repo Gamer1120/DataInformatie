@@ -33,11 +33,13 @@ public class JDBC {
 			String query = "SELECT DISTINCT person.name FROM person, writes WHERE person.pid = writes.pid AND writes.mid IN ( SELECT acts.mid FROM acts, person WHERE person.pid = acts.pid AND person.name = ?)";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, "Bruce Willis");
+			statement.setFetchSize(5);
 			ResultSet result = statement.executeQuery();
 			connection.close();
 			while (result.next()) {
 				System.out.println(result.getString(1));
 			}
+			result.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
