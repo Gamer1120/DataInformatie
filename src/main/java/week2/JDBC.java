@@ -57,7 +57,7 @@ public class JDBC {
 		ArrayList<Integer> retList = new ArrayList<Integer>();
 		ResultSet res = null;
 		try {
-			res = statement.executeQuery("SELECT m.mid FROM movie m");
+			res = statement.executeQuery("SELECT allefilms()");
 			while (res.next()) {
 				retList.add(res.getInt(1));
 			}
@@ -72,9 +72,7 @@ public class JDBC {
 		ArrayList<String> retList = new ArrayList<String>();
 		ResultSet res = null;
 		try {
-			res = statement
-					.executeQuery("SELECT p.name FROM person p, writes w WHERE p.pid = w.pid AND w.mid = "
-							+ mid);
+			res = statement.executeQuery("SELECT auteurvanfilm(" + mid + ")");
 			while (res.next()) {
 				retList.add(res.getString(1));
 			}
@@ -89,9 +87,7 @@ public class JDBC {
 		ResultSet res = null;
 		boolean result = true;
 		try {
-			res = statement
-					.executeQuery("SELECT * FROM directs WHERE directs.mid = "
-							+ mid);
+			res = statement.executeQuery("SELECT heeftregisseur(" + mid + ")");
 			while (res.next()) {
 				result = false;
 			}
